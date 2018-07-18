@@ -38,6 +38,7 @@ class ProjectWorkPeriodController
         $this->request = $request;
         $this->persistor = $persistor;
         $this->finder = $finder;
+        //todo: route request to appropriate method
     }
 
     public function registerWorkPeriod(Project $project, Period $period): ResponseInterface

@@ -38,6 +38,7 @@ class ProjectController
         $this->request = $request;
         $this->persistor = $persistor;
         $this->finder = $finder;
+        //todo: route request to appropriate method
     }
 
     public function getProject(Project $project): ResponseInterface
