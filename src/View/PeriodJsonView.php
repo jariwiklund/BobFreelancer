@@ -4,8 +4,9 @@ namespace BobFreelancer\View;
 
 
 use BobFreelancer\Models\Period;
+use JsonSerializable;
 
-class PeriodJsonView
+class PeriodJsonView implements JsonSerializable
 {
 
     /**

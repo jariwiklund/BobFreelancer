@@ -1,6 +1,8 @@
 <?php
 namespace BobFreelancer\Models;
 
+use DateTimeInterface;
+
 class Period
 {
     /**
@@ -24,6 +26,11 @@ class Period
         if($start->getOffset() != $stop->getOffset()){
             throw new InvalidArgumentException('Offset from UTC must be the same for start and stop');
         }
+
+        if($start->getTimestamp() > $stop->getTimestamp()){
+            throw new InvalidArgumentException('Start must be before stop');
+        }
+
         $this->start = $start;
         $this->stop = $stop;
     }
@@ -31,7 +38,7 @@ class Period
 
     public function getCoveredSeconds(): int
     {
-        return $this->start->getTimestamp() - $this->stop->getTimestamp();
+        return $this->stop->getTimestamp()-$this->start->getTimestamp();
     }
 
     /**

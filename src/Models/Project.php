@@ -1,13 +1,13 @@
 <?php
 namespace BobFreelancer\Models;
 
-use BobFreelancer\View\PeriodJsonView;
+use Ramsey\Uuid\Uuid;
 
 class Project
 {
 
     /**
-     * @var int
+     * @var Uuid
      */
     private $id;
 
@@ -25,7 +25,7 @@ class Project
      * @param int $id
      * @param string $name
      */
-    public function __construct( int $id, string $name, PeriodArray $work_periods )
+    public function __construct( Uuid $id, string $name, PeriodArray $work_periods )
     {
         $this->id = $id;
         $this->name = $name;
@@ -33,9 +33,9 @@ class Project
     }
 
     /**
-     * @return int
+     * @return Uuid
      */
-    public function getId(): int
+    public function getId(): Uuid
     {
         return $this->id;
     }

@@ -21,20 +21,10 @@ class ProjectJsonView implements JsonSerializable
 
     public function jsonSerialize()
     {
-        $json = [
+        return [
             'id' => $this->project->getId(),
             'name' => $this->project->getName(),
-            'work_periods' => [],
-            'total_seconds' => 0
+            'work_periods' => new PeriodArrayJsonView($this->project->getWorkPeriods())
         ];
-
-        /** @var PeriodArray $work_period */
-        foreach ($this->project->getWorkPeriods() as $work_period )
-        {
-            $json['work_periods'][] = new PeriodJsonView($work_period);
-            $json['total_seconds'] += $work_period->getCoveredSeconds();
-        }
-
-        return $json;
     }
 }

@@ -3,6 +3,7 @@
 namespace BobFreelancer\View;
 
 
+use DateTime;
 use DateTimeInterface;
 use JsonSerializable;
 
@@ -21,6 +22,6 @@ class DateTimeJsonView implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return $this->date_time->format(DateTimeInterface::RFC3339);
+        return $this->date_time->format(DateTime::RFC3339);
     }
 }

@@ -1,19 +1,19 @@
 <?php
+
 namespace BobFreelancer\Controllers;
 
+
 use BobFreelancer\Http\Response;
-use BobFreelancer\Models\Period;
 use BobFreelancer\Models\Project;
-use BobFreelancer\Models\ProjectWorkPeriod;
 use BobFreelancer\Persistence\FinderInterface;
+use BobFreelancer\Persistence\NullCriteria;
 use BobFreelancer\Persistence\PersistorInterface;
-use BobFreelancer\Persistence\WorkPeriodsForProjectCriteria;
-use BobFreelancer\View\PeriodArrayJsonView;
-use BobFreelancer\View\ProjectWorkPeriodJsonView;
+use BobFreelancer\View\ProjectArrayJsonView;
+use BobFreelancer\View\ProjectJsonView;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class ProjectWorkPeriodController
+class ProjectController
 {
 
     /**
@@ -40,17 +40,17 @@ class ProjectWorkPeriodController
         $this->finder = $finder;
     }
 
-    public function registerWorkPeriod(Project $project, Period $period): ResponseInterface
+    public function getProject(Project $project): ResponseInterface
     {
-        $project_work_period = new ProjectWorkPeriod($project, $period);
-        $this->persistor->persist($project_work_period);
-        return new Response();
+        $view = new ProjectJsonView($project);
+
+        return new Response(200, json_encode($view), 'text/json');
     }
 
-    public function getWorkPeriodsForProject(Project $project): ResponseInterface
+    public function getProjects(): ResponseInterface
     {
-        $workPeriods = $this->finder->find(new WorkPeriodsForProjectCriteria($project));
-        $view = new PeriodArrayJsonView($workPeriods);
+        $projects = $this->finder->find(new NullCriteria());
+        $view = new ProjectArrayJsonView($projects);
 
         return new Response(200, json_encode($view), 'text/json');
     }

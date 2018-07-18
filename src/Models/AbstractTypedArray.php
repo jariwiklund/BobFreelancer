@@ -5,21 +5,35 @@ namespace BobFreelancer\Models;
 
 use ArrayAccess;
 use InvalidArgumentException;
+use Iterator;
 use Traversable;
 
-abstract class AbstractTypedArray implements ArrayAccess, Traversable
+abstract class AbstractTypedArray implements ArrayAccess, Iterator
 {
 
     private $array = [];
 
-    public function add(object $object)
+    public static function fromArray(array $objects): Traversable
+    {
+        $typed_array = new static();
+        foreach ($objects as $object){
+            $typed_array->add($object);
+        }
+        return $typed_array;
+    }
+
+    public function add($object)
     {
         $this->validateType($object);
         $this->array[] = $object;
     }
 
-    private function validateType(object $object)
+    private function validateType($object)
     {
+        if(!is_object($object)){
+            throw new InvalidArgumentException('Must be an object ');
+        }
+
         $type = $this->getType();
         if( !($object instanceof $type) ){
             throw new InvalidArgumentException('Must be of type '.$type);
@@ -50,7 +64,7 @@ abstract class AbstractTypedArray implements ArrayAccess, Traversable
 
     public function current()
     {
-        return $this->array[$this->current_key];
+        return $this->array[$this->key()];
     }
 
     public function key()
