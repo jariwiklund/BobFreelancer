@@ -244,7 +244,7 @@ class Response implements ResponseInterface
      */
     public function getStatusCode()
     {
-        // TODO: Implement getStatusCode() method.
+        return $this->status_code;
     }
 
     /**

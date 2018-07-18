@@ -50,6 +50,7 @@ class ControllerTest extends TestCase
         $response = $controller->registerWorkPeriod($test_project, $test_period);
 
         $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function test_that_we_can_get_work_periods_for_project()
